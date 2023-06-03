@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongodb": "^5.5.0"
+  },
+  "name": "g3-api",
+  "version": "1.0.0",
+  "description": "MongoDB API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonFHq/minigames-tfg.git"
+  },
+  "keywords": [
+    "API",
+    "React",
+    "MongoDB",
+    "NodeJS"
+  ],
+  "author": "Laurita23",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonFHq/minigames-tfg/issues"
+  },
+  "homepage": "https://github.com/JonFHq/minigames-tfg#readme"
+}
