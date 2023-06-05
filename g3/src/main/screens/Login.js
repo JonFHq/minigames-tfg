@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, {useState, useEffect} from 'react';
 
 // NativeBase
 import { Box, Text, Input, extendTheme, Heading, NativeBaseProvider, Center, Button, Container, View } from "native-base";
@@ -8,13 +8,16 @@ import { Box, Text, Input, extendTheme, Heading, NativeBaseProvider, Center, But
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation, useNavigationState, useIsFocused } from '@react-navigation/native';
 
+// AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Login = () => {
     const navigation = useNavigation();
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [message, setMessage] = React.useState('');
-    const [status, setStatus] = React.useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [status, setStatus] = useState('');
 
     const login = async () => {
         const url = 'http://192.168.1.56:3000/LOGIN';
@@ -24,9 +27,15 @@ const Login = () => {
         console.log(JSON.stringify(data));
         if (data.status === 'OK') {
             console.log('login success');
+            console.log(data.message);
+            await AsyncStorage.removeItem('user');
+            await AsyncStorage.setItem('user', JSON.stringify(data.message));
+            setUsername('');
+            setPassword('');
             navigation.navigate('Home');
         } else {
             console.log('login failed');
+            setPassword('');
             setMessage(data.message);
             setStatus(data.status);
         }
@@ -111,18 +120,22 @@ const Login = () => {
     return (
         <NativeBaseProvider theme={theme}>
             <Center flex={1} minWidth={'full'}>
-                <Container >
+                <Container 
+                    keyboardShouldPersistTaps='handled'
+                 >
                     <Text >Login</Text>
                     <Text >+</Text>
                     <Input
                         placeholder="Username"
                         value={username}
-                        onChangeText={text => setUsername(text)} />
+                        onChangeText={text => setUsername(text)}
+                     />
                     <Input
                         placeholder="Password"
                         value={password}
                         secureTextEntry={true}
-                        onChangeText={text => setPassword(text)} />
+                        onChangeText={text => setPassword(text)}
+                     />
                     <Text variant='status'>{message}</Text>
                     <View>
                         <Button onPress={login}>Login</Button>

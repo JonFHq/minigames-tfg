@@ -24,7 +24,7 @@ app.get('/LOGIN', async (req, res) => {
   await closeDB();
   console.log(user);
   if (user) {
-    res.send({ status: 'OK', message: 'Usuario encontrado' });
+    res.send({ status: 'OK', message: user });
   } else {
     res.send({ status: 'ERROR', message: 'Usuario no encontrado' });
   }
