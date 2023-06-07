@@ -1,32 +1,74 @@
 // React
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 // NativeBase
-import { Box, Text, Input, extendTheme, Heading, NativeBaseProvider, Center, Button, Container, View } from "native-base";
+import { Text, extendTheme, NativeBaseProvider, Center, Button, View } from "native-base";
 
 // React Navigation
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useNavigation, useNavigationState, useIsFocused } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
     const navigation = useNavigation();
+    const wordle = 'pink';
+    const minesweeper = 'blue';
+    const snake = 'green';
+
+    const customTheme = extendTheme({
+        components: {
+            Text: {
+                variants: {
+                    title: {
+                        fontSize: '6xl',
+                    }
+                }
+            },
+            Button: {
+                baseStyle: {
+                    rounded: 0,
+                    width: '100%',
+                    height: '1/4',
+                    fontSize: '6xl',
+                },
+                defaultProps: {
+                    fontSize: '6xl',
+                },
+            },
+            Center: {
+                baseStyle: {
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }
+            },
+            View: {
+                baseStyle: {
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }
+            },
+        },
+    });
 
     return (
-        <NativeBaseProvider>
-            <Center marginTop={5}>
-                <Text>Home</Text>
-                <Button 
-                    onPress={() => navigation.navigate('Change Account')}
-                    bottom={0}
-                >Back to Login</Button>
-                <Input
-                    placeholder='Username'
-                    marginTop={5}
-                />
-                <Button
-                    onPress={() => navigation.navigate('Settings')}
-                    bottom={0}
-                >Settings</Button>
+        <NativeBaseProvider theme={customTheme}>
+            <Center >
+                <View>
+                    <Text variant={'title'}>Games</Text>
+                </View>
+                <Button colorScheme={wordle}
+                    onPress={() => { navigation.navigate('Game', { game: 'wordle' }); }}
+                >Wordle</Button>
+
+                <Button colorScheme={minesweeper}
+                    onPress={() => { navigation.navigate('Game', { game: 'minesweeper' }); }}
+                ><Text colorStyled={'minesweeper'} variant={'game'}>MineSweeper</Text></Button>
+                <View>
+                    <Text variant={'title'}>Working on...</Text>
+                </View>
+                <Button colorScheme={snake}
+                    onPress={() => { navigation.navigate('Game', { game: 'snake' }); }}
+                ><Text colorStyled={'snake'} variant={'game'}>Snake</Text></Button>
             </Center>
         </NativeBaseProvider>
     );

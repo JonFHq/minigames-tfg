@@ -12,9 +12,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 // Native Base
 import { NativeBaseProvider, extendTheme, Box, Center, Text, Heading, VStack, FormControl, Input, Button, Icon, IconButton, HStack, Divider, ScrollView, Pressable, Image, Avatar, Stack, Link } from 'native-base';
 
-// Icons
-import { MaterialIcons } from '@expo/vector-icons';
-
 // AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -23,12 +20,12 @@ const Settings = () => {
     const [user, setUser] = useState('');
 
     useEffect(() => {
-        const getUser = async () => {
+        const unsubscribe = navigation.addListener('focus', async () => {
             const user = await AsyncStorage.getItem('user');
             setUser(JSON.parse(user));
-        }
-        getUser();
-    }, []);
+        });
+        return unsubscribe;
+      }, []);
 
     return (
         <NativeBaseProvider>

@@ -1,5 +1,5 @@
 // React
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 // NativeBase
 import { Box, Text, Input, extendTheme, Heading, NativeBaseProvider, Center, Button, Container, View } from "native-base";
@@ -32,6 +32,8 @@ const Login = () => {
             await AsyncStorage.setItem('user', JSON.stringify(data.message));
             setUsername('');
             setPassword('');
+            setMessage('');
+            setStatus(data.status);
             navigation.navigate('Home');
         } else {
             console.log('login failed');
@@ -41,8 +43,9 @@ const Login = () => {
         }
     }
 
-    const signin = () => {
+    const signin = async () => {
         console.log('signing in');
+        await AsyncStorage.clear();
     }
     const theme = extendTheme({
         components: {
@@ -64,23 +67,21 @@ const Login = () => {
                 baseStyle: {
                     alignSelf: 'center',
                     alignItems: 'center',
-                    justifyContent: 'center',
                     backgroundColor: 'gray.100',
-                    minHeight: '80%',
                     flex: 1,
                 }
             },
             Input: {
                 baseStyle: {
                     marginTop: 2,
-                    backgroundColor: status === 'OK' ? 'green.100' : status === 'ERROR' ? 'red.100' : 'gray.100',
+                    backgroundColor: status === 'ERROR' ? 'red.100' : 'gray.100',
                     borderRadius: 10,
                     borderWidth: 2,
-                    borderColor: status === 'OK' ? 'green.400' : 'gray.400',
+                    borderColor: 'gray.400',
                     paddingLeft: 2,
                 },
                 defaultProps: {
-                    placeholderTextColor: status === 'OK' ? 'green.400' : status === 'ERROR' ? 'red.400' : 'gray.400',
+                    placeholderTextColor: status === 'ERROR' ? 'red.400' : 'gray.400',
                 },
                 variants: {
                     outline: {
@@ -102,14 +103,12 @@ const Login = () => {
                     borderColor: 'gray.400',
                     paddingLeft: 2,
                     width: '100%',
-                    // make the button stick to the bottom of the screen
                     bottom: 0,
-
                 }
             },
             View: {
                 baseStyle: {
-                    width: '100%',
+                    width: '80%',
                     position: 'absolute',
                     bottom: 0,
                 }
@@ -120,28 +119,31 @@ const Login = () => {
     return (
         <NativeBaseProvider theme={theme}>
             <Center flex={1} minWidth={'full'}>
-                <Container 
+                <Container
                     keyboardShouldPersistTaps='handled'
-                 >
-                    <Text >Login</Text>
-                    <Text >+</Text>
-                    <Input
-                        placeholder="Username"
-                        value={username}
-                        onChangeText={text => setUsername(text)}
-                     />
-                    <Input
-                        placeholder="Password"
-                        value={password}
-                        secureTextEntry={true}
-                        onChangeText={text => setPassword(text)}
-                     />
-                    <Text variant='status'>{message}</Text>
-                    <View>
-                        <Button onPress={login}>Login</Button>
-                        <Button onPress={signin}>Register</Button>
-                    </View>
+                >
+                    <Container
+                        marginTop={200}>
+                        <Text >Login</Text>
+                        <Text >+</Text>
+                        <Input
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={text => setUsername(text)}
+                        />
+                        <Input
+                            placeholder="Password"
+                            value={password}
+                            secureTextEntry={true}
+                            onChangeText={text => setPassword(text)}
+                        />
+                        <Text variant='status'>{message}</Text>
+                    </Container>
                 </Container>
+                <View>
+                    <Button onPress={login}>Login</Button>
+                    <Button onPress={signin}>Register</Button>
+                </View>
             </Center>
         </NativeBaseProvider>
     );
