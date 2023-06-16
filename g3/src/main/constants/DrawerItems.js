@@ -26,7 +26,6 @@ export default [
         iconType:MaterialCommunityIcons,
         iconName:'gamepad-square',
         component:Game,
-        game: 'wordle',
     },
     {
         name:'Leaderboard',

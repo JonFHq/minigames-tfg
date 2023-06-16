@@ -34,6 +34,7 @@ const AvatarEnhanced = ({ onBoxPress, image }) => {
                         source={{
                             uri: image,
                         }}
+                        backgroundColor={'white'}
                     />
                 </View>
             </Box>

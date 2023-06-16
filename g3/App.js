@@ -6,18 +6,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 
 // React Native
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard } from 'react-native';
 
 // Note: NativeBase
-import { NativeBaseProvider, Box, Text, Container, Center, Button, extendTheme, HStack, Icon, IconButton, Avatar } from 'native-base';
+import { NativeBaseProvider, Text, HStack, Icon, IconButton, Avatar } from 'native-base';
 
 // React Navigation
-import { NavigationContainer, useNavigation, useNavigationState, useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { getHeaderTitle } from '@react-navigation/elements';
 
 // Icons
-import { MaterialCommunityIcons, Feather, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 // Screens
 import DrawerItems from './src/main/constants/DrawerItems';
@@ -57,6 +56,7 @@ const CustomDrawer = () => {
       if (usuario != null && navigation.getCurrentRoute().name === 'Change Account')
         navigation.navigate('Home');
     }
+    
     getImage();
     return unsubscribe;
   }, [navigation]);

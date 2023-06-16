@@ -37,6 +37,7 @@ const Login = () => {
             navigation.navigate('Home');
         } else {
             console.log('login failed');
+            alert(data.status);
             setPassword('');
             setMessage(data.message);
             setStatus(data.status);
@@ -45,7 +46,6 @@ const Login = () => {
 
     const signin = async () => {
         console.log('signing in');
-        await AsyncStorage.clear();
     }
     const theme = extendTheme({
         components: {
@@ -122,9 +122,8 @@ const Login = () => {
                 <Container
                     keyboardShouldPersistTaps='handled'
                 >
-                    <Container
-                        marginTop={200}>
-                        <Text >Login</Text>
+                    <Container>
+                        <Text marginTop={'4/5'}>Login</Text>
                         <Text >+</Text>
                         <Input
                             placeholder="Username"
