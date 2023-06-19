@@ -20,10 +20,10 @@ const Login = () => {
     const [status, setStatus] = useState('');
 
     const login = async () => {
-        const url = 'http://192.168.1.56:3000/LOGIN';
+        const url = 'http://192.168.1.49:3000/LOGIN';
         const query = `?username=${username}&password=${password}`;
-        const response = await fetch(url + query);
-        const data = await response.json();
+            const response = await fetch(url + query);
+            const data = await response.json();
         console.log(JSON.stringify(data));
         if (data.status === 'OK') {
             console.log('login success');
@@ -46,7 +46,9 @@ const Login = () => {
 
     const signin = async () => {
         console.log('signing in');
+        navigation.navigate('Register');
     }
+    
     const theme = extendTheme({
         components: {
             Text: {
@@ -69,6 +71,7 @@ const Login = () => {
                     alignItems: 'center',
                     backgroundColor: 'gray.100',
                     flex: 1,
+                    bg: 'rgba(0, 0, 0, 0.0)',
                 }
             },
             Input: {
@@ -119,11 +122,9 @@ const Login = () => {
     return (
         <NativeBaseProvider theme={theme}>
             <Center flex={1} minWidth={'full'}>
-                <Container
-                    keyboardShouldPersistTaps='handled'
-                >
+                <Container>
                     <Container>
-                        <Text marginTop={'4/5'}>Login</Text>
+                        <Text marginTop={'4/6'}>Login</Text>
                         <Text >+</Text>
                         <Input
                             placeholder="Username"

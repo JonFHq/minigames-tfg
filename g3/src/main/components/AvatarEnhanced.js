@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 // Native Base
 import { Box, Image, View } from 'native-base';
 
-const AvatarEnhanced = ({ onBoxPress, image }) => {
+const AvatarEnhanced = ({ onBoxPress, image, color }) => {
 
     const changeEnhanced = () => {
         onBoxPress(false);
@@ -27,7 +27,7 @@ const AvatarEnhanced = ({ onBoxPress, image }) => {
                 marginTop={5}
                 bg={'rgba(233, 30, 100, 0.4)'}
             >
-                <View borderColor={'rose.900'} borderWidth={5}>
+                <View borderColor={ color + '900' } borderWidth={5}>
                     <Image
                         size={80}
                         alt={'Avatar'}

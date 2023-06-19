@@ -22,18 +22,17 @@ const Game = ({ route, navigation }) => {
     const [popUp, setPopUp] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [status, setStatus] = React.useState('');
+    const [game, setGame] = React.useState('wordle');
 
-    const game = route.params.game;
-    Dimensions.addEventListener('change', () => {
-        const width = Dimensions.get('window').width;
-        setWidth(width);
-    });
+    useEffect(() => {
+        setGame(route.params?.game); // Access the game prop using optional chaining
+    }, [route.params]);
 
     const webview = React.useRef(null);
     const handleRefresh = () => {
         if (webview.current) {
             console.log('refreshing');
-            webview.current.src = 'http://192.168.1.56:8080/' + game;
+            webview.current.src = 'http://192.168.1.49:8080/' + game;
         }
     }
 
@@ -42,38 +41,34 @@ const Game = ({ route, navigation }) => {
     }
 
     const handleSave = async () => {
-        await fetch('http://192.168.1.56:3000/SAVE', {
+        await fetch('http://192.168.1.49:3000/SAVE', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    game: game,
-                    user: await AsyncStorage.getItem('user'),
-                    })
-                })
-                .then((response) => response.json())
-                .then((json) => {
-                    console.log(json);
-                    if (json.status === 'OK') {
-                        console.log(json.message);
-                        setMessage(json.message);
-                        setStatus(json.status);
-                        navigation.navigate('Home');
-                    } else {
-                        console.log('save failed');
-                        alert(json.status);
-                        setMessage(json.message);
-                        console.log(json.message);
-                        setStatus(json.status);
-                    }
-                }
-            )
-            .catch((error) => {
-                console.error(error);
+            },
+            body: JSON.stringify({
+                game: game,
+                user: await AsyncStorage.getItem('user'),
+            })
+        }).then(
+            (response) =>
+                response.json()
+        ).then((json) => {
+            console.log(json);
+            if (json.status === 'OK') {
+                console.log(json.score);
+                setMessage(json.message);
+                setStatus(json.status);
+            } else {
+                console.log('save failed');
+                alert(json.status);
+                setMessage(json.message);
+                console.log(json.score);
+                setStatus(json.status);
             }
-        );
-        navigation.navigate('Game', { game: game });
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
     useEffect(() => {
@@ -87,7 +82,6 @@ const Game = ({ route, navigation }) => {
     return (
         <NativeBaseProvider>
             {popUp ? <InfoPopup onBoxPress={setPopUp} /> : null}
-            <Text>Ata {status} {message}</Text>
             <Box flex={1}>
                 <Center flex={1} >
                     <Container
@@ -105,7 +99,7 @@ const Game = ({ route, navigation }) => {
                     </Container>
                     <WebView
                         ref={webview}
-                        source={{ uri: 'http://192.168.1.56:8080/' + game }}
+                        source={{ uri: 'http://192.168.1.49:8080/' + game }}
                         flex={0}
                         width={width}
                     />

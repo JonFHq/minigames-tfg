@@ -140,3 +140,5 @@ dist
 .prettierrc.js
 
 %ProgramData%
+
+stash

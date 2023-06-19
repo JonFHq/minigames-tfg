@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const uri = 'mongodb+srv://admin:admin@tfg.3er0d9l.mongodb.net/?retryWrites=true';
+const uri = 'mongodb+srv://admin:admin@tfg.3er0d9l.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function connectDB() {
