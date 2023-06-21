@@ -5,12 +5,22 @@ import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 
 // Native Base
-import { Box, Image, View } from 'native-base';
+import { Box, Image, View, extendTheme } from 'native-base';
 
 const AvatarEnhanced = ({ onBoxPress, image, color }) => {
 
+    const colors = extendTheme().colors;
+
     const changeEnhanced = () => {
         onBoxPress(false);
+    }
+
+    const colorToRGB = (color) => {
+        const r = parseInt(color.slice(1, 3), 16);
+        const g = parseInt(color.slice(3, 5), 16);
+        const b = parseInt(color.slice(5, 7), 16);
+        const a = 0.3;
+        return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
     }
 
     return (
@@ -25,9 +35,9 @@ const AvatarEnhanced = ({ onBoxPress, image, color }) => {
                 justifyContent={'center'}
                 zIndex={1}
                 marginTop={5}
-                bg={'rgba(233, 30, 100, 0.4)'}
+                bg={colorToRGB(colors[color][100])}
             >
-                <View borderColor={ color + '900' } borderWidth={5}>
+                <View borderColor={colors[color][900]} borderWidth={5}>
                     <Image
                         size={80}
                         alt={'Avatar'}

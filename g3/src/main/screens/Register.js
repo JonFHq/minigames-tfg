@@ -31,7 +31,7 @@ const Register = ({ navigation }) => {
                     console.log('account created');
                     setMessage('');
                     setStatus(data.status);
-                    navigation.goBack();
+                    navigation.navigate('Change Account');
                 } else {
                     console.log('account creation failed');
                     setMessage(data.message);
@@ -79,10 +79,11 @@ const Register = ({ navigation }) => {
             },
             Container: {
                 baseStyle: {
+                    marginTop: 200,
                     alignSelf: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'gray.100',
                     flex: 1,
+                    bg: 'rgba(0,0,0,0.0)'
                 }
             },
             Input: {
@@ -134,31 +135,29 @@ const Register = ({ navigation }) => {
         <NativeBaseProvider theme={theme}>
             <Center flex={1} minWidth={'full'}>
                 <Container>
-                    <Container>
-                        <Text >Register</Text>
-                        <Text >+</Text>
-                        <Input
-                            placeholder="Username"
-                            value={username}
-                            onChangeText={text => setUsername(text)}
-                        />
-                        <Input
-                            placeholder="Password"
-                            value={password}
-                            secureTextEntry={true}
-                            onChangeText={text => setPassword(text)}
-                        />
-                        <Input
-                            placeholder="Confirm Password"
-                            value={repassword}
-                            secureTextEntry={true}
-                            onChangeText={text => setRepassword(text)}
-                        />
-                        <Text variant='status'>{message}</Text>
-                    </Container>
+                    <Text >Register</Text>
+                    <Text >+</Text>
+                    <Input
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={text => setUsername(text)}
+                    />
+                    <Input
+                        placeholder="Password"
+                        value={password}
+                        secureTextEntry={true}
+                        onChangeText={text => setPassword(text)}
+                    />
+                    <Input
+                        placeholder="Confirm Password"
+                        value={repassword}
+                        secureTextEntry={true}
+                        onChangeText={text => setRepassword(text)}
+                    />
+                    <Text variant='status'>{message}</Text>
                 </Container>
                 <View>
-                    <Button onPress={() => navigation.goBack()}>Back to login</Button>
+                    <Button onPress={() => navigation.navigate('Change Account')}>Back to login</Button>
                     <Button onPress={createAccount}>Create Account</Button>
                 </View>
             </Center>

@@ -26,11 +26,15 @@ app.get('/UPDATEACC/:oldName', async (req, res) => {
   const query = { username: oldName };
   const update = { $set: { username, image, password } };
   await collection.updateOne(query, update, { upsert: true });
-  const newUser = collection.findOne({username: username, password: password, image: image});
+  const newUser = await collection.findOne({username: username, password: password, image: image});
   console.log('Usuario actualizado');
   if (newUser == null) {
     res.send({ status: 'ERROR', message: 'Usuario no actualizado' });
   }
+  const relations = db.collection('wordleClasificacion');
+  const query2 = { user: oldName };
+  const update2 = { $set: { user: username } };
+  await relations.updateOne(query2, update2, { upsert: true });
   res.send({ status: 'OK', message: newUser });
   } finally {
     await closeDB();
@@ -64,7 +68,7 @@ app.get('/REGISTER', async (req, res) => {
     await connectDB();
     console.log('Query: ' + JSON.stringify(req.query));
     const { username, password } = req.query;
-    const image = '';
+    const image = 'https://cdn.icon-icons.com/icons2/2248/PNG/512/account_icon_138984.png';
     const db = await getDB();
     const collection = db.collection('usuarios');
     const document = { username, password, image };

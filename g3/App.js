@@ -53,6 +53,8 @@ const CustomDrawer = () => {
     try {
       if (usuario.image === undefined) {
         setImage('https://cdn.icon-icons.com/icons2/2248/PNG/512/account_icon_138984.png');
+      } else if (usuario.image === '') {
+        setImage('https://cdn.icon-icons.com/icons2/2248/PNG/512/account_icon_138984.png');
       } else {
         setImage(usuario.image);
       }
@@ -67,7 +69,7 @@ const CustomDrawer = () => {
   return (
     <>
       {
-        enhanced ? <AvatarEnhanced onBoxPress={setEnhanced} image={image} /> : null
+        enhanced ? <AvatarEnhanced onBoxPress={setEnhanced} image={image} color={color} /> : null
       }
       <ColorContext.Provider value={color}>
         <Drawer.Navigator

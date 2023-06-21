@@ -53,6 +53,10 @@ const Settings = ({ navigation }) => {
         console.log('cache cleared');
     }
 
+    const goLogin = () => {
+        navigation.navigate('Change Account');
+    }
+
     const styles = extendTheme({
         components: {
             Button: {
@@ -143,7 +147,7 @@ const Settings = ({ navigation }) => {
                 </Center>
             }
             {configuracion === 'Tu cuenta' &&
-                <TuCuenta backToSettings={setConfiguracion} user={user} color={color} />
+                <TuCuenta backToSettings={setConfiguracion} user={user} color={color} backToLogin={goLogin} />
             }
 
         </NativeBaseProvider>

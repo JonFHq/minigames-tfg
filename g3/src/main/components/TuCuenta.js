@@ -13,7 +13,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // Constants
 import ColorContext from '../constants/ColorContext';
 
-const TuCuenta = ({ backToSettings, user }) => {
+// AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const TuCuenta = ({ backToSettings, user, backToLogin }) => {
     const [username, setUsername] = useState(user.username);
     const [image, setImage] = useState(user.image);
     const [password, setPassword] = useState('');
@@ -28,6 +31,11 @@ const TuCuenta = ({ backToSettings, user }) => {
         console.log('Saliendo a configuración');
         console.log(colors[color][100])
         backToSettings('Configuración');
+    }
+
+    handleLogin = () => {
+        console.log('Saliendo a login');
+        backToLogin();
     }
 
     const changeAccountData = async () => {
@@ -69,6 +77,7 @@ const TuCuenta = ({ backToSettings, user }) => {
             alert('Contraseña incorrecta');
             console.log('wrong password');
         }
+        handleLogin();
     }
 
     const checkUsername = async () => {
